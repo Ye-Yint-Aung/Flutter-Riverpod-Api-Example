@@ -1,24 +1,27 @@
 class UserModel {
-  int? userId;
   int? id;
-  String? title;
-  String? body;
+  String? userName;
+  String? email;
+  int? age;
+  String? city;
 
-  UserModel({this.userId, this.id, this.title, this.body});
+  UserModel({this.id, this.userName, this.email, this.age, this.city});
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    userId = json['userId'];
-    id = json['id'];
-    title = json['title'];
-    body = json['body'];
+    id = json['Id'];
+    userName = json['UserName'];
+    email = json['Email'];
+    age = json['Age'];
+    city = json['City'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['userId'] = userId;
-    data['id'] = id;
-    data['title'] = title;
-    data['body'] = body;
+    data['Id'] = id;
+    data['UserName'] = userName;
+    data['Email'] = email;
+    data['Age'] = age;
+    data['City'] = city;
     return data;
   }
 }

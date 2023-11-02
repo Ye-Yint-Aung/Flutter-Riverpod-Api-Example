@@ -10,65 +10,53 @@ class HomeScreen extends ConsumerWidget {
     final _data = ref.watch(userProvider);
     return Scaffold(
       appBar: AppBar(title: Text("Users")),
-      body: Container(
-          child: ListView.builder(
-        itemCount: _data.value?.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("${_data.value?[index].body}"),
-          );
-        },
-      )),
+      body: _data.when(
+        data: (data) => ListView.builder(
+          itemCount: _data.value?.length,
+          itemBuilder: (context, index) {
+            return Card(
+                child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text("Name"), Text("Email"), Text("Age"), Text("City")],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      children: [
+                        Text(":"),
+                        Text(":"),
+                        Text(":"),
+                        Text(":"),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(_data.value![index].userName.toString()),
+                      Text(_data.value![index].email.toString()),
+                      Text(_data.value![index].age.toString()),
+                      Text(_data.value![index].city.toString()),
+                    ],
+                  ),
+                ],
+              ),
+            ));
+          },
+        ),
+        error: (err, s) => Text(err.toString()),
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
-
-/* 
-ElevatedButton(
-          onPressed: () => print("I am Data : ${_data.value![0].body}"),
-          child: Text("Click me"),
-        ), 
-*/
-
-
-/* 
-Container(
-          child: ListView.builder(
-        itemCount: _data.value!.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("${_data.value![index].body}"),
-          );
-        },
-      )),
-
- */
-
-
-/* 
-_data.when(
-          data: (_data) {
-            return Column(
-              children: [
-                ..._data.map((e) => ListView(shrinkWrap: true, children: [
-                      ListTile(
-                        title: Text(e.firstname),
-                        subtitle: Text(e.lastname),
-                        trailing: CircleAvatar(
-                          backgroundImage: NetworkImage(e.avatar),
-                        ),
-                      ),
-                    ])),
-              ],
-            );
-          },
-          error: (err, s) => Text(err.toString()),
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
-         
-        )
-
- */
